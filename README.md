@@ -29,4 +29,4 @@ From inside the docker web containers document root (`/var/www/html`) do:
 ## Stuff not polished yet
 
 * memcache setup
-* varnish only one way (also you need to change `profiles/ding2/ding2.vcl` to point to `web` instead of `127.0.0.1` as backend)
+* varnish only one way

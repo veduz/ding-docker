@@ -39,11 +39,15 @@ drush:
 memcached:
   image: memcached
 varnish:
-  image: zenedith/varnish
+  image: mobulum/varnish:1.4.0
   environment:
-    VCL_FILE: /opt/ding2.vcl
+    VCL_FILE: /opt/ding-docker.vcl
     LISTEN_PORT: 80
+    # Below an evil hack to pass extra options to `varnishd`. Uses the
+    # fact that ${TELNET_PORT} is unquoted in the run.sh script.
+    TELNET_PORT: 6083 -p vcc_err_unref=off
   volumes:
+    - './docker/ding-docker.vcl:/opt/ding-docker.vcl'
     - './web/profiles/ding2/ding2.vcl:/opt/ding2.vcl'
   ports:
     - '80/tcp'
