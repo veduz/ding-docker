@@ -1,0 +1,10 @@
+# @file
+# Example docker-compose override file
+web:
+  ports:
+  # For some reason 80:80 is not sufficient.
+    - '80/tcp:80/tcp'
+    - '443:433'
+db:
+  ports:
+    - '3306:3306'
