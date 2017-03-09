@@ -1,5 +1,8 @@
 #!/bin/sh
 
+apt-get update && \
+DEBIAN_FRONTEND=noninteractive apt-get -y install git patch
+
 # Make sure files folders exists and are owned by www-data.
 mkdir -p /var/www/html/sites/default/files/private
 chown -R www-data /var/www/html/sites/default/files
