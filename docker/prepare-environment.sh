@@ -19,3 +19,5 @@ fi
 
 # Enable ding PHP configuration.
 phpenmod ding
+
+mkdir -p /root/.ssh && touch /root/.ssh/known_hosts && ssh-keyscan -H github.com >> /root/.ssh/known_hosts && chmod 600 /root/.ssh/known_hosts
