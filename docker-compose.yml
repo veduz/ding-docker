@@ -5,6 +5,7 @@ web:
     - '443/tcp'
   volumes:
     - './web:/var/www/html'
+    - './drupal.make:/var/www/html/drupal.make'
     - './docker/settings.php:/var/www/html/sites/default/settings.php:ro'
     - './docker/settings.local.php:/var/www/html/sites/default/settings.local.php:ro'
     - './docker/drupal-cron.conf:/etc/cron.d/drupal-cron.conf:ro'
