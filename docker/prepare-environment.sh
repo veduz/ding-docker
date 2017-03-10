@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Install git and patch commands, since we need them for Drush Make operations.
 apt-get update && \
 DEBIAN_FRONTEND=noninteractive apt-get -y install git patch
 
