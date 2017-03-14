@@ -30,16 +30,9 @@ db:
     MYSQL_PASSWORD: ichai4IesaeSainohV0oT2ca9hooNi
 gulp:
   image: node:argon
-  volumes_from:
-    - web
-  entrypoint: "/bin/sh -c 'cd /var/www/html/profiles/ding2/themes/ddbasic && npm install --unsafe-perm && node_modules/.bin/gulp watch'"
-drush:
-  image: drush/drush
-  links:
-    - db
-  volumes_from:
-    - web
-  working_dir: /var/www/html
+  volumes:
+    - './web/profiles/ding2/themes/ddbasic:/src'
+  entrypoint: "/bin/sh -c 'cd /src && npm install --unsafe-perm && node_modules/.bin/gulp sass'"
 memcached:
   image: memcached
 varnish:
