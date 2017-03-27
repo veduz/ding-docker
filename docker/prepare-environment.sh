@@ -1,8 +1,11 @@
 #!/bin/sh
 
 # Install git and patch commands, since we need them for Drush Make operations.
-apt-get update && \
-DEBIAN_FRONTEND=noninteractive apt-get -y install git patch
+DPKG_STATUS=$(dpkg-query -s git 2>/dev/null)
+if [ $? -eq 1 ]; then
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install git patch
+fi
 
 # Make sure files folders exists and are owned by www-data.
 mkdir -p /var/www/html/sites/default/files/private
