@@ -1,28 +1,19 @@
 version: "2"
 services:
   web:
-    image: reload/drupal-apache-ssl
-    volumes_from:
-      - webroot
+    image: reload/drupal-apache-fpm
+    volumes:
+      - './web:/var/www/html'
     environment:
       VIRTUAL_HOST: ding2-bbs.docker
-      VIRTUAL_PROTO: https
     links:
-      - php
+      - php:fpm
 
   php:
     image: reload/drupal-php7-fpm:php5-experimental
-    volumes_from:
-      - webroot
     links:
       - db
       - memcached
-
-  webroot:
-    image: tianon/true
-    volumes:
-      - './docker/config/php/php.ini:/etc/php/5.6/mods-available/drupal-recommended.ini:ro'
-      - './:/var/www/html:rw'
 
   db:
     image: mariadb:10
@@ -39,14 +30,6 @@ services:
     volumes_from:
       - web
     entrypoint: "/bin/sh -c 'cd /var/www/html/profiles/ding2/themes/ddbasic && npm install --unsafe-perm && node_modules/.bin/gulp watch'"
-
-  drush:
-    image: drush/drush
-    links:
-      - db
-    volumes_from:
-      - web
-    working_dir: /var/www/html
 
   memcached:
     image: memcached
