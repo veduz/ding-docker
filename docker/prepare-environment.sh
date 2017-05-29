@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Make sure files folders exists and are owned by www-data.
-mkdir -p /var/www/html/sites/default/files/private
-chown -R www-data /var/www/html/sites/default/files
+mkdir -p /var/www/web/sites/default/files/private
+chown -R www-data /var/www/web/sites/default/files
 
 # Put cron file into function.
 if [ -r /etc/cron.d/drupal-cron.conf ]; then

@@ -1,9 +1,14 @@
 version: "2"
 services:
+  webroot:
+    image: tianon/true
+    volumes:
+      - './web:/var/www/web:rw'
+
   web:
     image: reload/drupal-apache-fpm
-    volumes:
-      - './web:/var/www/html'
+    volumes_from:
+      - webroot
     environment:
       VIRTUAL_HOST: ding2-bbs.docker
     links:
@@ -11,6 +16,11 @@ services:
 
   php:
     image: reload/drupal-php7-fpm:php5-experimental
+    environment:
+      PATH: '/var/www/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+      PHP_SENDMAIL_PATH: /usr/local/bin/mhsendmail --smtp-addr="mailhog:1025"
+    volumes_from:
+      - webroot
     links:
       - db
       - memcached
@@ -25,11 +35,19 @@ services:
       MYSQL_USER: db
       MYSQL_PASSWORD: db
 
+  mailhog:
+      image: mailhog/mailhog
+      # Web-inteface exposed on mail.ding2-bbs.docker
+      environment:
+        VIRTUAL_HOST: mail.ding2-bbs.docker
+      ports:
+        - "8025:80"
+
   gulp:
     image: node:argon
     volumes_from:
-      - web
-    entrypoint: "/bin/sh -c 'cd /var/www/html/profiles/ding2/themes/ddbasic && npm install --unsafe-perm && node_modules/.bin/gulp watch'"
+      - webroot
+    entrypoint: "/bin/sh -c 'cd /var/www/web/profiles/ding2/themes/ddbasic && npm install --unsafe-perm && node_modules/.bin/gulp watch'"
 
   memcached:
     image: memcached
