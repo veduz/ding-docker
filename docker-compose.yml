@@ -48,7 +48,8 @@ services:
     image: node:argon
     volumes_from:
       - webroot
-    entrypoint: "/bin/sh -c 'cd /var/www/web/profiles/ding2/themes/ddbasic && npm install --unsafe-perm && node_modules/.bin/gulp watch'"
+    entrypoint: "/bin/sh -c 'cd /var/www/web/profiles/ding2/themes/ddbasic && npm install && node_modules/.bin/gulp watch'"
+    user: node
 
   memcached:
     image: memcached
