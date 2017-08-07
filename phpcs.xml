@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="drupal_core">
+    <file>web/profiles/ding2/modules</file>
+    <arg name="extensions" value="php,module,inc,install,test,profile,theme,js,css,info,txt"/>
+
+    <!--Exclude third party code.-->
+    <exclude-pattern>web/profiles/ding2/modules/contrib/*</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/modules/ding_test/vendor/*</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/modules/fbs/prancer/*</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/modules/fbs/vendor/*</exclude-pattern>
+    # Third party JavaScript libraries
+    <exclude-pattern>web/profiles/ding2/themes/ddbasic/scripts/equalize.min.js</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/themes/ddbasic/scripts/html5shiv.js</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/themes/ddbasic/scripts/jquery.*</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/themes/ddbasic/scripts/respond.*</exclude-pattern>
+    <exclude-pattern>web/profiles/ding2/themes/ddbasic/scripts/scalefix.js</exclude-pattern>
+    # Minified JavaScript files
+    <exclude-pattern>web/profiles/ding2/themes/ddbasic/scripts/*.min.js</exclude-pattern>
+    <exclude-pattern>*.features.*</exclude-pattern>
+    <exclude-pattern>*.feeds_importer_default.inc</exclude-pattern>
+    <exclude-pattern>*.field_group.inc</exclude-pattern>
+    <exclude-pattern>*.layouts.inc</exclude-pattern>
+    <exclude-pattern>*.pages_default.inc</exclude-pattern>
+    <exclude-pattern>*.panels_default.inc</exclude-pattern>
+    <exclude-pattern>*.panelizer.inc</exclude-pattern>
+    <exclude-pattern>*.strongarm.inc</exclude-pattern>
+    <exclude-pattern>*.views_default.inc</exclude-pattern>
+</ruleset>
+

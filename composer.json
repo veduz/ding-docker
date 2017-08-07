@@ -1,5 +1,12 @@
 {
     "require": {
         "drush/drush": "7"
+    },
+    "require-dev": {
+        "drupal/coder": "^7.2"
+    },
+    "scripts": {
+        "phpcs": "vendor/bin/phpcs --standard=vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml,phpcs.xml",
+        "phpcs-checkstyle": "vendor/bin/phpcs --standard=vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml,phpcs.xml --report=checkstyle --report-file=tests/reports/phpcs-checkstyle.xml"
     }
 }
