@@ -22,29 +22,31 @@ services:
       PHP_SENDMAIL_PATH: /usr/local/bin/mhsendmail --smtp-addr="mailhog:1025"
     volumes_from:
       - webroot
+    working_dir: /var/www/web
     links:
       - db
       - memcached
 
   db:
-    image: mariadb:10
-    volumes:
-      - './docker/db:/docker-entrypoint-initdb.d'
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db
-      MYSQL_USER: db
-      MYSQL_PASSWORD: db
-    ports:
-      - "3306:3306"
+  # A new datadir is currently created by uploading a new dump via
+  # https://github.com/reload/db-dump-worker/blob/master/opt/util/build-and-upload-dump.sh
+  # and then running /opt/datadir-preinit/preinit-tag.sh on beta.reload.dk
+      image: reload/db-datadir:bbs-localdev-latest-fulldb
+  # Switch to the following if you want to use a local sql-dump:
+  #    image: mariadb:10
+  #    volumes:
+  #      - './docker/db:/docker-entrypoint-initdb.d'
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: root
+  #      MYSQL_DATABASE: db
+  #      MYSQL_USER: db
+  #      MYSQL_PASSWORD: db
 
   mailhog:
       image: mailhog/mailhog
       # Web-inteface exposed on mail.ding2-bbs.docker
       environment:
         VIRTUAL_HOST: mail.ding2-bbs.docker
-      ports:
-        - "8025:80"
 
   gulp:
     image: node:argon
