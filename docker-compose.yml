@@ -8,6 +8,8 @@ services:
 
   web:
     image: reload/drupal-apache-fpm
+    ports:
+      - '80'
     volumes_from:
       - webroot
     environment:
@@ -17,9 +19,12 @@ services:
 
   php:
     image: reload/drupal-php7-fpm:php5-experimental
+    ports:
+      - '9000'
     environment:
       PATH: '/var/www/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
       PHP_SENDMAIL_PATH: /usr/local/bin/mhsendmail --smtp-addr="mailhog:1025"
+      PHP_EXTRA_EXTENSIONS: 'memcache'
     volumes_from:
       - webroot
     working_dir: /var/www/web
@@ -32,7 +37,9 @@ services:
   # https://github.com/reload/db-dump-worker/blob/master/opt/util/build-and-upload-dump.sh
   # and then running /opt/datadir-preinit/preinit-tag.sh on beta.reload.dk
       image: reload/db-datadir:bbs-localdev-latest-fulldb
-  # Switch to the following if you want to use a local sql-dump:
+      ports:
+        - '3306'
+# Switch to the following if you want to use a local sql-dump:
   #    image: mariadb:10
   #    volumes:
   #      - './docker/db:/docker-entrypoint-initdb.d'
