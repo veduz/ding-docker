@@ -3,8 +3,8 @@ services:
   webroot:
     image: tianon/true
     volumes:
-      - './web:/var/www/web:rw'
       - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:ro'
+      - './web:/var/www/web:rw'
 
   web:
     image: reload/drupal-apache-fpm
