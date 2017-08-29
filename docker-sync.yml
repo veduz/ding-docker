@@ -1,0 +1,7 @@
+version: "2"
+
+syncs:
+  bbs-webroot-sync:
+    src: './web'
+  bbs-vendor-sync:
+    src: './vendor'
