@@ -13,7 +13,11 @@ cp -R ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/defaul
 # Reset the site. If the aleph module exists, run composer for it and enable it
 # if it does not exist, enable the connie module.
 time docker-compose run --entrypoint "sh -c" --rm php " \
+  echo '*** Resetting files ownership and permissions' && \
+  chmod -R u+rw /var/www/web/sites/default/files && \
+  chown -R 33 /var/www/web/sites/default && \
   echo '*** Composer installing' && \
+  (test ! -f /var/www/web/profiles/ding2/composer.json || composer --working-dir=/var/www/web/profiles/ding2 install) && \
   composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install && \
   composer --working-dir=/var/www/web/profiles/ding2/modules/fbs install && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || composer --working-dir=/var/www/web/profiles/ding2/modules/aleph install) && \

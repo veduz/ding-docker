@@ -1,0 +1,13 @@
+version: "2"
+services:
+  webroot:
+    volumes:
+      - 'bbs-webroot-sync:/var/www/web:nocopy'
+      - 'bbs-vendor-sync:/var/www/vendor:nocopy'
+      - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
+
+volumes:
+  bbs-webroot-sync:
+    external: true
+  bbs-vendor-sync:
+    external: true

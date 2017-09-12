@@ -17,9 +17,14 @@ cd "${SCRIPT_DIR}/../"
 # often translates to how long it takes the database-container to come up.
 SLEEP_BEFORE_RESET=20
 
-# Preemptive sudo lease - to let you go out and grab a coffee while the script
-# runs.
-sudo echo ""
+echoc "*** Stopping docker sync"
+docker-sync stop
+
+echoc "*** Performing Initial docker sync"
+docker-sync sync
+
+echoc "*** Starting deamonized docker-sync"
+docker-sync --daemon
 
 # Clear all running containers.
 echoc "*** Removing existing containers"
@@ -27,7 +32,7 @@ docker-compose kill && docker-compose rm -v -f
 
 # Start up containers in the background and continue imidiately
 echoc "*** Starting new containers"
-docker-compose up --remove-orphans -d
+docker-compose -f docker-compose.yml -f docker-compose-dev.yml up --remove-orphans -d
 
 # Sleep while containers are starting up then perform a reset
 echoc "*** Waiting ${SLEEP_BEFORE_RESET} seconds for containers to come up"

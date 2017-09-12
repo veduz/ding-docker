@@ -3,8 +3,8 @@ services:
   webroot:
     image: tianon/true
     volumes:
-      - 'bbs-webroot-sync:/var/www/web:nocopy'
-      - 'bbs-vendor-sync:/var/www/vendor:nocopy'
+      - './web:/var/www/web'
+      - './vendor:/var/www/vendor'
       - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
 
   web:
@@ -66,9 +66,3 @@ services:
 
   memcached:
     image: memcached
-
-volumes:
-  bbs-webroot-sync:
-    external: true
-  bbs-vendor-sync:
-    external: true
