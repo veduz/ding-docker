@@ -8,7 +8,7 @@ IFS=$'\n\t'
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Copying sample-assets in place"
-cp -vR ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/default/files/"
+cp -R ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/default/files/"
 
 # Reset the site. If the aleph module exists, run composer for it and enable it
 # if it does not exist, enable the connie module.
@@ -29,8 +29,10 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   drush vset ting_search_profile test && \
   drush vset ting_agency 100200 && \
   drush vset autologout_timeout 36000 && \
+  drush vset autologout_role_logout 0 && \
   drush vset aleph_base_url http://snorri.lb.is/X && \
   drush vset aleph_base_url_rest http://snorri.lb.is:1892/rest-dlf && \
+  drush vset aleph_main_library ICE01 && \
   drush vset aleph_enable_logging TRUE && \
   echo '*** Clearing cache' && \
   drush cc all

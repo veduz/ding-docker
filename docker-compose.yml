@@ -3,8 +3,9 @@ services:
   webroot:
     image: tianon/true
     volumes:
-      - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:ro'
-      - './web:/var/www/web:rw'
+      - 'bbs-webroot-sync:/var/www/web:nocopy'
+      - 'bbs-vendor-sync:/var/www/vendor:nocopy'
+      - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
 
   web:
     image: reload/drupal-apache-fpm
@@ -25,6 +26,7 @@ services:
       PATH: '/var/www/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
       PHP_SENDMAIL_PATH: /usr/local/bin/mhsendmail --smtp-addr="mailhog:1025"
       PHP_EXTRA_EXTENSIONS: 'memcache'
+      XDEBUG_CONFIG: "remote_connect_back=0 remote_host=docker.for.mac.localhost"
     volumes_from:
       - webroot
     working_dir: /var/www/web
@@ -60,7 +62,13 @@ services:
     volumes_from:
       - webroot
     entrypoint: "/bin/sh -c 'cd /var/www/web/profiles/ding2/themes/ddbasic && npm install && node_modules/.bin/gulp watch'"
-    user: node
+    user: root
 
   memcached:
     image: memcached
+
+volumes:
+  bbs-webroot-sync:
+    external: true
+  bbs-vendor-sync:
+    external: true
