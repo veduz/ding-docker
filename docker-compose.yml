@@ -19,7 +19,7 @@ services:
       - php:fpm
 
   php:
-    image: reload/drupal-php7-fpm:php5-experimental
+    image: reload/drupal-php7-fpm:5.6
     ports:
       - '9000'
     environment:
