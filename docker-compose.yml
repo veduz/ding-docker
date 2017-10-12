@@ -65,3 +65,5 @@ services:
 
   memcached:
     image: memcached
+    ports:
+      - '11211'
