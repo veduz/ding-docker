@@ -24,13 +24,17 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   echo '*** Disabeling and enabling modules' && \
   drush dis alma -y && \
   drush en ding_test -y && \
+  drush en syslog -y && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
-  (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Asing connie' && drush en connie -y)) && \
+  (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Using connie' && drush en connie -y)) && \
+  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opesearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
   echo '*** Setting variables' && \
-  drush vset ting_search_url http://oss-services.dbc.dk/opensearch/4.2/ && \
+  drush vset ting_search_url https://opensearch.addi.dk/b3.5_4.5/ && \
+  drush vset ting_enable_logging 1 && \
   drush vset ting_search_profile test && \
+  drush vset ding_serendipity_isslow_timeout 120 && \
   drush vset ting_agency 100200 && \
   drush vset autologout_timeout 36000 && \
   drush vset autologout_role_logout 0 && \
