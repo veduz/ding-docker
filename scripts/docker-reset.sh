@@ -21,7 +21,6 @@ if [[ $(type -P "docker-sync") && -f "${SCRIPT_DIR}/../docker-sync.yml" ]]; then
     DOCKER_SYNC=1
 fi
 
-
 cd "${SCRIPT_DIR}/../"
 # The number of seconds it takes for docker-compose up to get up and running
 # often translates to how long it takes the database-container to come up.
@@ -38,7 +37,6 @@ if [[ $DOCKER_SYNC ]]; then
     docker-sync start || true
     docker-sync sync
 fi
-
 
 # Clear all running containers.
 echoc "*** Removing existing containers"
@@ -73,5 +71,9 @@ docker-compose exec ${WEB_CONTAINER} curl --silent --output /dev/null -H "Host: 
 
 # Done, bring the background docker-compose logs back into foreground
 echoc "*** Done, watching logs"
-docker-compose logs -f
-
+if [[ $(type -P "recode") ]]; then
+    # Watchdog escapes htmlentities so use recode (if available) to decode.
+    docker-compose logs -f | recode html
+else
+    docker-compose logs -f
+fi

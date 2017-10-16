@@ -40,7 +40,7 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   drush variable-set ting_search_url https://opensearch.addi.dk/b3.5_4.5/ && \
   drush variable-set ting_enable_logging 1 && \
   drush variable-set ting_search_profile test && \
-  drush variable-set ding_serendipity_isslow_timeout 120 && \
+  drush variable-set ding_serendipity_isslow_timeout 20 && \
   drush variable-set ting_agency 100200 && \
   drush variable-set autologout_timeout 36000 && \
   drush variable-set autologout_role_logout 0 && \
