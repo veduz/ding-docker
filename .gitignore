@@ -2,3 +2,4 @@ web/
 vendor/
 drupal.make
 docker-compose.override.yml
+.docker-sync
