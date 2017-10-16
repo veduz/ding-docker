@@ -48,6 +48,7 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   drush variable-set aleph_base_url_rest http://snorri.lb.is:1892/rest-dlf && \
   drush variable-set aleph_main_library ICE01 && \
   drush variable-set aleph_enable_logging TRUE && \
+  drush variable-set aleph_enable_reservation_deletion TRUE && \
   echo '*** Clearing cache' && \
   drush cc all
   "
