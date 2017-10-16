@@ -1,5 +1,6 @@
 version: "2"
 services:
+  # Webroot container shared between the web, php and gulp container.
   webroot:
     image: tianon/true
     volumes:
@@ -15,6 +16,8 @@ services:
       - webroot
     environment:
       VIRTUAL_HOST: ding2-bbs.docker
+    # The drupal-apache-fpm image expects the container that runs fpm to be
+    # available as "fpm" so we alias our link to the php container.
     links:
       - php:fpm
 
@@ -34,14 +37,14 @@ services:
       - memcached
 
   db:
-  # A new datadir is currently created by uploading a new dump via
-  # https://github.com/reload/db-dump-worker/blob/master/opt/util/build-and-upload-dump.sh
-  # and then running /opt/datadir-preinit/preinit-tag.sh on beta.reload.dk
-      image: reload/db-datadir:bbs-localdev-latest-fulldb
-      ports:
-        - '3306'
-# Switch to the following if you want to use a local sql-dump:
-  #    image: mariadb:10
+    image: mariadb:10
+    ports:
+      - '3306'
+    # Pull in the nightly build of the database.
+    volumes_from:
+      - db-data
+  # If you want to use a local database dump, remove the volumes_from, place the
+  # dump in ./docker/db and add the following
   #    volumes:
   #      - './docker/db:/docker-entrypoint-initdb.d'
   #    environment:
@@ -50,6 +53,11 @@ services:
   #      MYSQL_USER: db
   #      MYSQL_PASSWORD: db
 
+  # Nightly build of a database datadir based on a nightly database dump.
+  db-data:
+    image: reload/db-datadir:bbs-dev-latest
+
+  # Mailcapture with a webinterface.
   mailhog:
       image: mailhog/mailhog
       # Web-inteface exposed on mail.ding2-bbs.docker

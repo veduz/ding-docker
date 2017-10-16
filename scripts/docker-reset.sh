@@ -67,6 +67,7 @@ sleep ${SLEEP_BEFORE_RESET}
 echoc "*** Resetting Drupal"
 "${SCRIPT_DIR}/site-reset.sh"
 
+# Warm up the caches.
 echoc "*** Requesting ${HOST} in ${WEB_CONTAINER}"
 docker-compose exec ${WEB_CONTAINER} curl --silent --output /dev/null -H "Host: ${HOST}" localhost
 
