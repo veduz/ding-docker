@@ -20,7 +20,7 @@ curl -O https://raw.github.com/ding2/ding2/master/drupal.make
 ```
 
 ### Install dory
-__If you're running MacOS update ruby first:__ ```brew install ruby```
+__If you're running MacOS 10.12 (Sierra) or lower, update ruby first:__ ```brew install ruby```
 ```
 sudo gem install dory
 ```
@@ -30,10 +30,13 @@ sudo gem install dory
 dory up 
 ```
 
-### Start containers
+### Start containers and prepare the site for development
 ```sh
-docker-compose up
+make install
 ```
+
+#### Scripts
+Run ```make``` to see available scripts.
 
 ### Go to https://ding2-bbs.docker
 
