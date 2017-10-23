@@ -16,7 +16,7 @@ cp -R ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/defaul
 #   the system table not to confuse core to much. This can happen as we have
 #   branches that does not have the aleph module.
 # - If it does not exist, enable the connie module.
-time docker-compose run --entrypoint "sh -c" --rm php " \
+time docker-compose exec php sh -c "\
   echo '*** Resetting files ownership and permissions' && \
   chmod -R u+rw /var/www/web/sites/default/files && \
   chown -R 33 /var/www/web/sites/default && \
@@ -26,9 +26,11 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   composer --working-dir=/var/www/web/profiles/ding2/modules/fbs install && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || composer --working-dir=/var/www/web/profiles/ding2/modules/aleph install) && \
   (test -d /var/www/web/profiles/ding2/modules/aleph || drush sql-query \"DELETE from system where name = 'aleph';\") && \
+  drush cc all && \
   echo '*** Disabling and enabling modules' && \
   drush dis alma -y && \
   drush dis ting_fulltext -y && \
+  drush dis ting_infomedia -y && \
   drush en ding_test -y && \
   drush en syslog -y && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
@@ -38,6 +40,22 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   drush updb -y && \
   echo '*** Setting variables' && \
   drush variable-set ting_search_url https://opensearch.addi.dk/b3.5_4.5/ && \
+  drush variable-set ting_search_autocomplete_suggestion_url http://opensuggestion.addi.dk/b3.0_2.0/ && \
+  echo '
+{
+    \"index\": \"scanterm.default\",
+    \"facetIndex\": \"scanphrase.default\",
+    \"filterQuery\": \"\",
+    \"sort\": \"count\",
+    \"agency\": \"100200\",
+    \"profile\": \"test\",
+    \"maxSuggestions\": \"10\",
+    \"maxTime\": \"2000\",
+    \"highlight\": 0,
+    \"highlight.pre\": \"\",
+    \"highlight.post\": \"\",
+    \"minimumString\": \"3\"
+}' | drush variable-set --format=json ting_search_autocomplete_settings - && \
   drush variable-set ting_enable_logging 1 && \
   drush variable-set ting_search_profile test && \
   drush variable-set ding_serendipity_isslow_timeout 20 && \
