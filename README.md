@@ -2,7 +2,20 @@
 
 Still unpolished and in the works.
 
+## Prerequisites
+
+This project assumes that the following software is installed and working on your machine:
+
+- [Docker and docker-compose](https://www.docker.com/community-edition#/download)
+- [Drush 8.x](http://docs.drush.org/en/8.x/install/)
+
 ## Preparation
+
+Clone this repository
+```sh
+% git clone https://github.com/reload/ding-docker.git
+% cd ding-docker
+```
 
 Get a ding make file
 ```sh
