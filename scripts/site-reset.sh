@@ -33,7 +33,7 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   drush en syslog -y && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
   (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Using connie' && drush en connie -y)) && \
-  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opesearch search provider' && drush en opensearch -y)) && \
+  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
   echo '*** Setting variables' && \
