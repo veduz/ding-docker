@@ -49,6 +49,9 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   drush variable-set aleph_main_library ICE01 && \
   drush variable-set aleph_enable_logging TRUE && \
   drush variable-set aleph_enable_reservation_deletion TRUE && \
+  drush variable-set primo_base_url http://lkbrekdev01.lb.is:1701 && \
+  drush variable-set primo_institution_code ICE && \
+  drush variable-set primo_enable_logging TRUE && \
   echo '*** Clearing cache' && \
   drush cc all
   "
