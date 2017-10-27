@@ -12,6 +12,7 @@ cp -R ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/defaul
 
 # Reset the site.
 # - If the aleph module exists, run composer for it and enable it
+# - If the primo module exists then enable it
 # - If not enable connie and , "uninstall" aleph it manually by clearing it from
 #   the system table not to confuse core to much. This can happen as we have
 #   branches that does not have the aleph module.
@@ -28,11 +29,13 @@ time docker-compose run --entrypoint "sh -c" --rm php " \
   (test -d /var/www/web/profiles/ding2/modules/aleph || drush sql-query \"DELETE from system where name = 'aleph';\") && \
   echo '*** Disabling and enabling modules' && \
   drush dis alma -y && \
+  drush dis ting_covers_addi -y && \
   drush dis ting_fulltext -y && \
   drush en ding_test -y && \
   drush en syslog -y && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
   (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Using connie' && drush en connie -y)) && \
+  (test -d /var/www/web/profiles/ding2/modules/primo || (echo '*** Using primo provider' && drush en primo -y)) && \
   (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
