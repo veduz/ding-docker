@@ -12,6 +12,7 @@ cp -R ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/defaul
 
 # Reset the site.
 # - If the aleph module exists, run composer for it and enable it
+# - If the primo module exists then enable it
 # - If not enable connie and , "uninstall" aleph it manually by clearing it from
 #   the system table not to confuse core to much. This can happen as we have
 #   branches that does not have the aleph module.
@@ -29,13 +30,15 @@ time docker-compose exec php sh -c "\
   drush cc all && \
   echo '*** Disabling and enabling modules' && \
   drush dis alma -y && \
+  drush dis ting_covers_addi -y && \
   drush dis ting_fulltext -y && \
   drush dis ting_infomedia -y && \
   drush en ding_test -y && \
   drush en syslog -y && \
   (test ! -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
   (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Using connie' && drush en connie -y)) && \
-  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opesearch search provider' && drush en opensearch -y)) && \
+  (test -d /var/www/web/profiles/ding2/modules/primo || (echo '*** Using primo provider' && drush en primo -y)) && \
+  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
   echo '*** Setting variables' && \
@@ -67,6 +70,9 @@ time docker-compose exec php sh -c "\
   drush variable-set aleph_main_library ICE01 && \
   drush variable-set aleph_enable_logging TRUE && \
   drush variable-set aleph_enable_reservation_deletion TRUE && \
+  drush variable-set primo_base_url http://lkbrekdev01.lb.is:1701 && \
+  drush variable-set primo_institution_code ICE && \
+  drush variable-set primo_enable_logging TRUE && \
   echo '*** Clearing cache' && \
   drush cc all
   "
