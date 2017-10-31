@@ -4,7 +4,7 @@ services:
     volumes:
       - 'bbs-webroot-sync:/var/www/web:nocopy'
       - 'bbs-vendor-sync:/var/www/vendor:nocopy'
-      - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
+      - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:delegated'
 
 volumes:
   bbs-webroot-sync:
