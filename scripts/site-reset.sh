@@ -10,35 +10,46 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Copying sample-assets in place"
 cp -R ${SCRIPT_DIR}/../docker/sample-assets/* "${SCRIPT_DIR}/../web/sites/default/files/"
 
-# Reset the site.
-# - If the aleph module exists, run composer for it and enable it
+# Clear out modules introduced as a part of BBS and thus may be absent depending
+# on which branch we're on.
+time docker-compose exec php sh -c "\
+  (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** The aleph module is not present in this revision - clearing it from the system table' && drush sql-query \"DELETE from system where name = 'aleph';\")) && \
+  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** The opensearch module is not present in this revision - clearing it from the system table' && drush sql-query \"DELETE from system where name = 'opensearch';\")) && \
+  (test -d /var/www/web/profiles/ding2/modules/ding_test || (echo '*** The ding_test module is not present in this revision - clearing it from the system table' && drush sql-query \"DELETE from system where name = 'ding_test';\"))
+  (test -d /var/www/web/profiles/ding2/modules/primo || (echo '*** The primo module is not present in this revision - clearing it from the system table' && drush sql-query \"DELETE from system where name = 'primo';\"))
+"
+
+# General reset of the site.
+# - Basic fixes of permission
+# - Run composer install for a list of modules we know to need it (if they're
+#   present on the current branch.
+# - Disable alma and fbs (known default providers) if present
 # - If the primo module exists then enable it
-# - If not enable connie and , "uninstall" aleph it manually by clearing it from
-#   the system table not to confuse core to much. This can happen as we have
-#   branches that does not have the aleph module.
-# - If it does not exist, enable the connie module.
+# - If the aleph module exists enable it, if not enable the connie module.
+# - Disable ding modules not used by bbs (eg ting_fulltext and ting_infomedia)
+# - Switch to syslog to be able to monitor logs via standard out.
+# - Run updb and set a number of default variable values.
 time docker-compose exec php sh -c "\
   echo '*** Resetting files ownership and permissions' && \
   chmod -R u+rw /var/www/web/sites/default/files && \
   chown -R 33 /var/www/web/sites/default && \
   echo '*** Composer installing' && \
   (test ! -f /var/www/web/profiles/ding2/composer.json || composer --working-dir=/var/www/web/profiles/ding2 install) && \
-  composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install && \
-  composer --working-dir=/var/www/web/profiles/ding2/modules/fbs install && \
-  (test ! -d /var/www/web/profiles/ding2/modules/aleph || composer --working-dir=/var/www/web/profiles/ding2/modules/aleph install) && \
-  (test -d /var/www/web/profiles/ding2/modules/aleph || drush sql-query \"DELETE from system where name = 'aleph';\") && \
+  (test ! -f /var/www/web/profiles/ding2/modules/ding_test/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install) && \
+  (test ! -f /var/www/web/profiles/ding2/modules/fbs/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/fbs install) && \
+  (test ! -f /var/www/web/profiles/ding2/modules/aleph/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/aleph install) && \
   drush cc all && \
   echo '*** Disabling and enabling modules' && \
-  drush dis alma -y && \
+  drush dis alma fbs -y && \
   drush dis ting_covers_addi -y && \
   drush dis ting_fulltext -y && \
   drush dis ting_infomedia -y && \
-  drush en ding_test -y && \
   drush en syslog -y && \
-  (test ! -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
-  (test -d /var/www/web/profiles/ding2/modules/aleph || (echo '*** Using connie' && drush en connie -y)) && \
-  (test -d /var/www/web/profiles/ding2/modules/primo || (echo '*** Using primo provider' && drush en primo -y)) && \
-  (test -d /var/www/web/profiles/ding2/modules/opensearch || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
+  (test ! -f /var/www/web/profiles/ding2/modules/ding_test/ding_test.module || drush en ding_test) && \
+  (test ! -f /var/www/web/profiles/ding2/modules/aleph/aleph.module || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
+  (test -f /var/www/web/profiles/ding2/modules/aleph/aleph.module || (echo '*** Using connie' && drush en connie -y)) && \
+  (test ! -f /var/www/web/profiles/ding2/modules/primo/primo.module || (echo '*** Using primo provider' && drush en primo -y)) && \
+  (test -f /var/www/web/profiles/ding2/modules/opensearch/opensearch.module || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
   echo '*** Setting variables' && \
