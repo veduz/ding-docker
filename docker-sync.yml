@@ -2,6 +2,8 @@ version: "2"
 
 syncs:
   bbs-webroot-sync:
+    host_disk_mount_mode: 'delegated'
     src: './web'
   bbs-vendor-sync:
     src: './vendor'
+    host_disk_mount_mode: 'delegated'
