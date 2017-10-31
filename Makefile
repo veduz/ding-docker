@@ -6,6 +6,7 @@ RESET=\033[0m
 die:
 	@echo "${WHITE}make reset: ${RED}Destroy and rebuild site. 💥${RESET}"
 	@echo "${WHITE}make site-reset: ${GREEN}Reset site and prepare for development. ${RESET}"
+	@echo "${WHITE}make logs: ${GREEN}Tails logs for the stack. ${RESET}"
 
 site-reset:
 	@./scripts/site-reset.sh
@@ -13,3 +14,5 @@ site-reset:
 reset:
 	@./scripts/docker-reset.sh
 
+logs:
+	@./scripts/docker-logs.sh

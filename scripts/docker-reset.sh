@@ -71,9 +71,4 @@ docker-compose exec ${WEB_CONTAINER} curl --silent --output /dev/null -H "Host: 
 
 # Done, bring the background docker-compose logs back into foreground
 echoc "*** Done, watching logs"
-if [[ $(type -P "recode") ]]; then
-    # Watchdog escapes htmlentities so use recode (if available) to decode.
-    docker-compose logs -f | recode html
-else
-    docker-compose logs -f
-fi
+"${SCRIPT_DIR}/docker-logs.sh"
