@@ -33,6 +33,8 @@ time docker-compose exec php sh -c "\
   echo '*** Resetting files ownership and permissions' && \
   chmod -R u+rw /var/www/web/sites/default/files && \
   chown -R 33 /var/www/web/sites/default && \
+  echo '*** Drush making' && \
+  drush make -y --no-core --contrib-destination=/var/www/web/profiles/ding2 /var/www/web/profiles/ding2/ding2.make && \
   echo '*** Composer installing' && \
   (test ! -f /var/www/web/profiles/ding2/composer.json || composer --working-dir=/var/www/web/profiles/ding2 install) && \
   (test ! -f /var/www/web/profiles/ding2/modules/ding_test/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install) && \
