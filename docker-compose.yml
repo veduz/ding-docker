@@ -35,6 +35,7 @@ services:
     links:
       - db
       - memcached
+      - openlist
 
   db:
     image: mariadb:10
@@ -75,3 +76,26 @@ services:
     image: memcached
     ports:
       - '11211'
+
+  openlist:
+    build: ./openlist/docker
+    ports:
+      - '80'
+    volumes:
+      - './openlist:/var/www/html'
+    links:
+      - openlist-db
+    environment:
+      VIRTUAL_HOST: openlist.docker
+
+  openlist-db:
+    image: mariadb:10
+    ports:
+      - '3306'
+    volumes:
+      - './openlist/db:/docker-entrypoint-initdb.d'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db 
