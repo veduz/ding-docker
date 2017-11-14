@@ -34,7 +34,7 @@ time docker-compose exec php sh -c "\
   chmod -R u+rw /var/www/web/sites/default/files && \
   chown -R 33 /var/www/web/sites/default && \
   echo '*** Drush making' && \
-  drush make -y --no-core --contrib-destination=./profiles/ding2 /var/www/web/profiles/ding2/ding2.make && \
+  drush make -y --no-core --concurrency=4 --contrib-destination=./profiles/ding2 /var/www/web/profiles/ding2/ding2.make && \
   echo '*** Composer installing' && \
   (test ! -f /var/www/web/profiles/ding2/composer.json || composer --working-dir=/var/www/web/profiles/ding2 install) && \
   (test ! -f /var/www/web/profiles/ding2/modules/ding_test/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install) && \
