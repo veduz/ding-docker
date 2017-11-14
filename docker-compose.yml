@@ -31,6 +31,8 @@ services:
       PHP_EXTRA_EXTENSIONS: 'memcache'
     volumes_from:
       - webroot
+    volumes:
+      - drush-cache:/root/.drush
     working_dir: /var/www/web
     links:
       - db
@@ -75,3 +77,6 @@ services:
     image: memcached
     ports:
       - '11211'
+
+volumes:
+  drush-cache:
