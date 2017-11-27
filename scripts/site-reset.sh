@@ -40,6 +40,8 @@ time docker-compose exec php sh -c "\
   (test ! -f /var/www/web/profiles/ding2/modules/ding_test/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install) && \
   (test ! -f /var/www/web/profiles/ding2/modules/fbs/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/fbs install) && \
   (test ! -f /var/www/web/profiles/ding2/modules/aleph/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/aleph install) && \
+  echo '*** Running updb' && \
+  drush updb -y && \
   drush cc all && \
   echo '*** Disabling and enabling modules' && \
   drush dis alma fbs -y && \
