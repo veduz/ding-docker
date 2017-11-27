@@ -54,6 +54,8 @@ time docker-compose exec php sh -c "\
   (test -f /var/www/web/profiles/ding2/modules/opensearch/opensearch.module || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
+  echo '*** Reverting features' && \
+  drush features-revert-all -y && \
   echo '*** Setting variables' && \
   drush variable-set opensearch_url https://opensearch.addi.dk/b3.5_4.5/ && \
   drush variable-set opensearch_search_autocomplete_suggestion_url http://opensuggestion.addi.dk/b3.0_2.0/ && \
