@@ -40,6 +40,8 @@ time docker-compose exec php sh -c "\
   (test ! -f /var/www/web/profiles/ding2/modules/ding_test/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/ding_test install) && \
   (test ! -f /var/www/web/profiles/ding2/modules/fbs/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/fbs install) && \
   (test ! -f /var/www/web/profiles/ding2/modules/aleph/composer.json || composer --working-dir=/var/www/web/profiles/ding2/modules/aleph install) && \
+  echo '*** Running updb' && \
+  drush updb -y && \
   drush cc all && \
   echo '*** Disabling and enabling modules' && \
   drush dis alma fbs -y && \
@@ -54,9 +56,11 @@ time docker-compose exec php sh -c "\
   (test -f /var/www/web/profiles/ding2/modules/opensearch/opensearch.module || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
   echo '*** Running updb' && \
   drush updb -y && \
+  echo '*** Reverting features' && \
+  drush features-revert-all -y && \
   echo '*** Setting variables' && \
   drush variable-set opensearch_url https://opensearch.addi.dk/b3.5_4.5/ && \
-  drush variable-set ting_search_autocomplete_suggestion_url http://opensuggestion.addi.dk/b3.0_2.0/ && \
+  drush variable-set opensearch_search_autocomplete_suggestion_url http://opensuggestion.addi.dk/b3.0_2.0/ && \
   echo '
 {
     \"index\": \"scanterm.default\",
@@ -71,7 +75,7 @@ time docker-compose exec php sh -c "\
     \"highlight.pre\": \"\",
     \"highlight.post\": \"\",
     \"minimumString\": \"3\"
-}' | drush variable-set --format=json ting_search_autocomplete_settings - && \
+}' | drush variable-set --format=json opensearch_search_autocomplete_settings - && \
   drush variable-set opensearch_enable_logging 1 && \
   drush variable-set opensearch_recommendation_url 'http://openadhl.addi.dk/1.1/' && \
   drush variable-set opensearch_search_profile test && \
