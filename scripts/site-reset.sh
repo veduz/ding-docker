@@ -56,7 +56,7 @@ time docker-compose exec php sh -c "\
   drush updb -y && \
   echo '*** Setting variables' && \
   drush variable-set opensearch_url https://opensearch.addi.dk/b3.5_4.5/ && \
-  drush variable-set ting_search_autocomplete_suggestion_url http://opensuggestion.addi.dk/b3.0_2.0/ && \
+  drush variable-set opensearch_search_autocomplete_suggestion_url http://opensuggestion.addi.dk/b3.0_2.0/ && \
   echo '
 {
     \"index\": \"scanterm.default\",
@@ -71,10 +71,10 @@ time docker-compose exec php sh -c "\
     \"highlight.pre\": \"\",
     \"highlight.post\": \"\",
     \"minimumString\": \"3\"
-}' | drush variable-set --format=json ting_search_autocomplete_settings - && \
+}' | drush variable-set --format=json opensearch_search_autocomplete_settings - && \
   drush variable-set opensearch_enable_logging 1 && \
   drush variable-set opensearch_recommendation_url 'http://openadhl.addi.dk/1.1/' && \
-  drush variable-set ting_search_profile test && \
+  drush variable-set opensearch_search_profile test && \
   drush variable-set ding_serendipity_isslow_timeout 20 && \
   drush variable-set opensearch_agency 100200 && \
   drush variable-set autologout_timeout 36000 && \
