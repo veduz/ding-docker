@@ -92,6 +92,7 @@ time docker-compose exec php sh -c "\
   drush variable-set primo_institution_code ICE && \
   drush variable-set primo_sourceid ICE01_PRIMO_TEST && \
   drush variable-set primo_enable_logging TRUE && \
+  echo '[\"BBAAA\",\"BBRAA\",\"BBFAA\",\"BBGAA\",\"BBKAA\",\"BBSAA\",\"BBNAA\"]' | drush variable-set --format=json primo_location_scopes - && \
   echo '*** Clearing cache' && \
   drush cc all
   "
