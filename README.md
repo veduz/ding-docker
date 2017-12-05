@@ -2,6 +2,18 @@
 
 Still unpolished and in the works.
 
+## Branching
+- `master` used when preparing merge from the upstream (ding2-origin/master). 
+- `bbs-aleph-provider` used for the Aleph provider module.
+- `bbs-master` used for Primo - `bbs-sal` and `bbs-aleph-provider` is merged into this branch.
+- `bbs-sal` used for the search abstraction layer aka. SAL.
+
+When merging code from `ding2-origin/master`:
+1. Pull `ding2-origin/master` into `master` and push.
+2. Create a "merge branch" from `bbs-master`.
+3. Merge `master` into the merge branch.
+4. Resolve conflicts and push the code.
+
 ## Preparation
 
 ### Install Drush
