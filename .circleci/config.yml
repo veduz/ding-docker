@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: youpy/docker-compose-git
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build site using Drush Make
+          command: |
+            docker-compose up -d
+            docker run appropriate/curl -Ls https://raw.github.com/ding2/ding2/master/drupal.make > drupal.make
+            docker cp drupal.make "$(docker-compose ps -q drush)":/drupal.make
+            docker-compose exec drush make --contrib-destination=profiles/ding2/ drupal.make web
