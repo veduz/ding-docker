@@ -1,0 +1,6 @@
+version: "2"
+
+syncs:
+  ding2-webroot-sync:
+    host_disk_mount_mode: 'delegated'
+    src: './web'
