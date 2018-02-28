@@ -53,7 +53,15 @@ time docker-compose exec php sh -c "\
   (test ! -f /var/www/web/profiles/ding2/modules/aleph/aleph.module || (echo '*** Aleph detected, enabling and disabling Connie' && drush en aleph -y && drush dis connie -y)) && \
   (test -f /var/www/web/profiles/ding2/modules/aleph/aleph.module || (echo '*** Using connie' && drush en connie -y)) && \
   (test ! -f /var/www/web/profiles/ding2/modules/primo/primo.module || (echo '*** Using primo provider' && drush en primo -y)) && \
-  (test -f /var/www/web/profiles/ding2/modules/opensearch/opensearch.module || (echo '*** Using opensearch search provider' && drush en opensearch -y)) && \
+  (test -f /var/www/web/profiles/ding2/modules/opensearch/opensearch.module && (echo '*** Using opensearch search provider' && drush en opensearch -y && echo '[
+  {\"name\":\"facet.type\",\"title\":\"Materialetype\",\"sorting\":\"default\",\"weight\":\"-10\"},
+  {\"name\":\"facet.creator\",\"title\":\"Forfatter\",\"sorting\":\"default\",\"weight\":\"-9\"},
+  {\"name\":\"facet.subject\",\"title\":\"Emne\",\"sorting\":\"default\",\"weight\":\"-8\"},
+  {\"name\":\"facet.language\",\"title\":\"Sprog\",\"sorting\":\"default\",\"weight\":\"-7\"},
+  {\"name\":\"facet.category\",\"title\":\"M\u00e5lgruppe\",\"sorting\":\"default\",\"weight\":\"-6\"},
+  {\"name\":\"facet.date\",\"title\":\"\u00c5rstal\",\"sorting\":\"numeric_reverse\",\"weight\":\"-5\"},
+  {\"name\":\"facet.acSource\",\"title\":\"Kilde\",\"sorting\":\"default\",\"weight\":\"-4\"}
+  ]' | drush variable-set --format=json ding_facetbrowser_facets -)) && \
   echo '*** Running updb' && \
   drush updb -y && \
   echo '*** Reverting features' && \
