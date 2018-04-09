@@ -27,6 +27,7 @@ services:
       PATH: '/var/www/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
       PHP_SENDMAIL_PATH: /usr/local/bin/mhsendmail --smtp-addr="mailhog:1025"
       PHP_EXTRA_EXTENSIONS: 'memcache'
+      BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "http://web/", "selenium2" : { "wd_host" : "http://selenium-hub:4444/wd/hub" } } } }'
     volumes_from:
       - webroot
     volumes:
@@ -44,8 +45,8 @@ services:
       - '3306'
     # If you want to use a local database dump, remove the volumes_from, place the
     # dump in ./docker/db and add the following
-    # volumes:
-    #   - './docker/db:/docker-entrypoint-initdb.d'
+    volumes:
+      - './docker/db:/docker-entrypoint-initdb.d'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: db
