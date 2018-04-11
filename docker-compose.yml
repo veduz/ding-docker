@@ -4,7 +4,7 @@ services:
   webroot:
     image: tianon/true
     volumes:
-      - './web:/var/www/web'
+      - './web:/var/www/web:cached'
       - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
   web:
     image: reload/drupal-apache-fpm
