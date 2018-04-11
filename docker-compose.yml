@@ -68,7 +68,7 @@ services:
     user: root
 
   drush:
-    image: drush/drush:8
+    build: docker/drush
     links:
       - db
     volumes_from:
