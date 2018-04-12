@@ -63,7 +63,7 @@ sleep ${SLEEP_BEFORE_RESET}
 
 # Perform the drupal-specific reset
 echoc "*** Resetting Drupal"
-"${SCRIPT_DIR}/site-reset.sh"
+make site-reset
 
 # Warm up the caches.
 echoc "*** Requesting ${HOST} in ${WEB_CONTAINER}"
