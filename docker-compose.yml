@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 services:
   # Webroot container shared between the web, php, gulp and drush containers.
   webroot:
@@ -6,6 +6,7 @@ services:
     volumes:
       - './web:/var/www/web'
       - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
+
   web:
     image: reload/drupal-apache-fpm
     ports:
@@ -55,10 +56,10 @@ services:
 
   # Mailcapture with a webinterface.
   mailhog:
-      image: mailhog/mailhog
-      # Web-inteface exposed on mail.ding2.docker
-      environment:
-        VIRTUAL_HOST: mail.ding2.docker
+    image: mailhog/mailhog
+    # Web-interface exposed on mail.ding2.docker
+    environment:
+      VIRTUAL_HOST: mail.ding2.docker
 
   gulp:
     image: node:argon
