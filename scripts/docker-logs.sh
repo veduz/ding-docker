@@ -7,7 +7,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echoc () {
     GREEN=$(tput setaf 2)
-    RESET=$(tput sgr 0)
+    RESET=$(tput sgr0)
 	echo -e "${GREEN}$1${RESET}"
 }
 
