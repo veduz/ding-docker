@@ -43,3 +43,5 @@ echo "Building ding_test"
 docker run --rm -v `pwd`:/var/www/ --workdir=/var/www/web/profiles/ding2/modules/ding_test reload/drupal-php7-fpm:php5-experimental composer install
 echo "Building fbs"
 docker run --rm -v `pwd`:/var/www/ --workdir=/var/www/web/profiles/ding2/modules/fbs reload/drupal-php7-fpm:php5-experimental composer install
+echo "Running composer install"
+docker run -v `pwd`:/var/www --workdir=/var/www reload/drupal-php7-fpm:php5-experimental composer install
