@@ -63,7 +63,7 @@ sleep ${SLEEP_BEFORE_RESET}
 
 # Perform the drupal-specific reset
 echoc "*** Resetting Drupal"
-"${SCRIPT_DIR}/site-reset.sh"
+docker-compose run --rm php /root/site-reset.sh
 
 # Warm up the caches.
 echoc "*** Requesting ${HOST} in ${WEB_CONTAINER}"

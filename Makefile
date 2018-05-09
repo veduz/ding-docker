@@ -9,7 +9,7 @@ die:
 	@echo "${WHITE}make logs: ${GREEN}Tails logs for the stack. ${RESET}"
 
 site-reset:
-	@./scripts/site-reset.sh
+	@docker-compose run --rm php /root/site-reset.sh
 
 reset:
 	@./scripts/docker-reset.sh

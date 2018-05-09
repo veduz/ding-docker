@@ -4,8 +4,8 @@ services:
   webroot:
     image: tianon/true
     volumes:
-      - './web:/var/www/web'
-      - './vendor:/var/www/vendor'
+      - './web:/var/www/web:cached'
+      - './vendor:/var/www/vendor:cached'
       - './docker/docker.settings.php:/var/www/web/sites/default/settings.php:cached'
 
   web:
@@ -33,7 +33,11 @@ services:
       - webroot
     volumes:
       - drush-cache:/root/.drush
+      - ./scripts/site-reset.sh:/root/site-reset.sh
+      - ./docker/sample-assets:/root/docker/sample-assets
     working_dir: /var/www/web
+    depends_on:
+      - db
     links:
       - db
       - memcached
