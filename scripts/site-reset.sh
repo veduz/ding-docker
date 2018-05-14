@@ -28,7 +28,7 @@ cp -R /root/docker/sample-assets/* sites/default/files/
 # - Run updb and set a number of default variable values.
 echo '*** Resetting files ownership and permissions'
 chmod -R u+rw sites/default/files
-chown -R 33 sites/default
+chown -R www-data sites/default
 echo '*** Drush making'
 drush make -y --no-core --concurrency=4 --contrib-destination=./profiles/ding2 profiles/ding2/ding2.make
 echo '*** Running composer install'
