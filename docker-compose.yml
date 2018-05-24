@@ -15,7 +15,7 @@ services:
     volumes_from:
       - webroot
     environment:
-      VIRTUAL_HOST: ding2-bbs.docker
+      VIRTUAL_HOST: bbs.docker
     # The drupal-apache-fpm image expects the container that runs fpm to be
     # available as "fpm" so we alias our link to the php container.
     links:
@@ -68,7 +68,7 @@ services:
       image: mailhog/mailhog
       # Web-inteface exposed on mail.ding2-bbs.docker
       environment:
-        VIRTUAL_HOST: mail.ding2-bbs.docker
+        VIRTUAL_HOST: mail.bbs.docker
 
   gulp:
     image: node:argon
