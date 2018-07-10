@@ -11,6 +11,7 @@ die:
 # Reset site. This could do with some cleanup and splitting into subtargets.
 site-reset:
 	@echo "${WHITE}Copying sample-assets in place${RESET}"
+	mkdir -p web/sites/default/files
 	cp -R docker/sample-assets/* web/sites/default/files/
 
 	@# Clear out modules introduced as a part of BBS and thus may be absent depending
