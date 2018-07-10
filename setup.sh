@@ -45,7 +45,7 @@ git remote add ding2-origin https://github.com/ding2/ding2.git
 git fetch
 popd
 echo "Building ding2"
-docker run --rm -v "${SCRIPT_DIR}":/var/www/ --workdir=/var/www/web/profiles/ding2/ reload/drupal-php7-fpm:php5-experimental drush make --contrib-destination=profiles/ding2 --no-core -y profiles/ding2/ding2.make
+docker run --rm -v "${SCRIPT_DIR}":/var/www/ --workdir=/var/www/web/profiles/ding2 reload/drupal-php7-fpm:php5-experimental drush make --contrib-destination=profiles/ding2 --no-core -y ding2.make
 echo "Building ding_test"
 docker run --rm -v "${SCRIPT_DIR}":/var/www/ --workdir=/var/www/web/profiles/ding2/modules/ding_test reload/drupal-php7-fpm:php5-experimental composer install
 echo "Building fbs"
