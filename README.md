@@ -34,6 +34,16 @@ Ensure variables are set
 make site-reset
 ```
 
+Start project on Mac
+```
+docker-sync-stack start
+```
+
+Start project on Linux/Windows
+```
+docker-compose up
+```
+
 ### Go to https://ding2-bbs.docker
 
 #### Stuff not polished yet
