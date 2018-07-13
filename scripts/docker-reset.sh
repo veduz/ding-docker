@@ -8,7 +8,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echoc () {
     GREEN=$(tput setaf 2)
-    RESET=$(tput sgr0)
+    RESET=$(tput sgr 0)
 	echo -e "${GREEN}$1${RESET}"
 }
 
@@ -63,7 +63,7 @@ sleep ${SLEEP_BEFORE_RESET}
 
 # Perform the drupal-specific reset
 echoc "*** Resetting Drupal"
-make site-reset
+docker-compose run --rm php /root/site-reset.sh
 
 # Warm up the caches.
 echoc "*** Requesting ${HOST} in ${WEB_CONTAINER}"

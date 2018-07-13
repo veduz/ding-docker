@@ -4,20 +4,8 @@ Still unpolished and in the works.
 
 ## Preparation
 
-### Install Drush
-```
-composer install
-```
-
-### Download ding2 makefile
-```sh
-curl -O https://raw.github.com/ding2/ding2/master/drupal.make
-```
-
-### Build the site with drush make
-```sh
-./vendor/bin/drush make --contrib-destination=profiles/ding2/ drupal.make web
-```
+### Install Docker
+https://www.docker.com/community-edition#/download
 
 ### Install dory
 __If you're running MacOS update ruby first:__ ```brew install ruby```
@@ -25,13 +13,34 @@ __If you're running MacOS update ruby first:__ ```brew install ruby```
 sudo gem install dory
 ```
 
-### Start dory
+#### Start dory
 ```
-dory up 
+dory up
 ```
 
 ### Start containers
 ```sh
+docker-compose up
+```
+
+## Setup
+Make Drupal site and ding2 profile
+```
+./setup.sh rvk-utd/ding2 bbs-master
+```
+
+Ensure variables are set
+```
+make site-reset
+```
+
+Start project on Mac
+```
+docker-sync-stack start
+```
+
+Start project on Linux/Windows
+```
 docker-compose up
 ```
 
