@@ -30,8 +30,6 @@ SLEEP_BEFORE_RESET=20
 HOST="localhost"
 WEB_CONTAINER="web"
 
-sudo echo ""
-
 if [[ $DOCKER_SYNC ]]; then
     echoc "*** Performing Initial docker sync"
     docker-sync start || true
