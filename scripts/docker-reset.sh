@@ -8,7 +8,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echoc () {
     GREEN=$(tput setaf 2)
-    RESET=$(tput sgr 0)
+    RESET=$(tput sgr0)
 	echo -e "${GREEN}$1${RESET}"
 }
 
@@ -29,8 +29,6 @@ SLEEP_BEFORE_RESET=20
 # Hostname to send a request to to warm up the cache-cleared site.
 HOST="localhost"
 WEB_CONTAINER="web"
-
-sudo echo ""
 
 if [[ $DOCKER_SYNC ]]; then
     echoc "*** Performing Initial docker sync"
