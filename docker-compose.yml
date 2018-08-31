@@ -63,18 +63,25 @@ services:
   db-data:
     image: reload/db-datadir:bbs-dev-latest
 
-  # Mailcapture with a webinterface.
+  # Mail capture with a web-interface.
   mailhog:
       image: mailhog/mailhog
-      # Web-inteface exposed on mail.bbs.docker
+      # Web-interface exposed on mail.bbs.docker
       environment:
         VIRTUAL_HOST: mail.bbs.docker
 
-  gulp:
+  gulp-ddbasic:
     image: node:argon
     volumes_from:
       - webroot
     entrypoint: "/bin/sh -c 'cd /var/www/web/profiles/ding2/themes/ddbasic && npm install && node_modules/.bin/gulp watch'"
+    user: root
+
+  gulp-bbs:
+    image: node:argon
+    volumes_from:
+    - webroot
+    entrypoint: "/bin/sh -c 'cd /var/www/web/profiles/ding2/themes/bbs && npm install && node_modules/.bin/gulp watch'"
     user: root
 
   memcached:
