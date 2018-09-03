@@ -53,15 +53,15 @@ services:
   # dump in ./docker/db and add the following
   #    volumes:
   #      - './docker/db:/docker-entrypoint-initdb.d'
-  #    environment:
-  #      MYSQL_ROOT_PASSWORD: root
-  #      MYSQL_DATABASE: db
-  #      MYSQL_USER: db
-  #      MYSQL_PASSWORD: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
 
   # Nightly build of a database datadir based on a nightly database dump.
   db-data:
-    image: reload/db-datadir:bbs-dev-latest
+    image: eu.gcr.io/reloaddk-data/db-data:bbs-dev-latest
 
   # Mail capture with a web-interface.
   mailhog:
