@@ -32,6 +32,15 @@ Then you can start the Docker containers:
 % docker-compose up
 ```
 
+You should then be able to access the site.
+
+If the site does not look right then run:
+
+```sh
+% docker-compose exec php drush css-generate
+% docker-compose exec php drush cc all
+```
+
 ### Using a custom version of the codebase
 
 To use a custom version of the code base then first complete the steps above. add your fork as a remote to the profile and checkout your branch:
@@ -57,9 +66,11 @@ Note that you may have to clear the cache, download new dependencies or even rei
 
 ## Install ding
 
-Running the install profile can sometimes be tricky.
+This setup includes a database containing data from a clean installation of the latest version of Ding. Thus the system is already installed.
 
-The sure-fire way (especially on Mac) is to run the install script through the browser: 
+If you want to run the install profile yourself you have to drop the contents of the datase first. After that running the install profile can sometimes be tricky.
+
+The sure-fire way (especially on Mac) is to run the install script through the browser:
 http://local.docker/install.php (Use the ding2 profile)
 
 Notice: This way can be pretty slow.
