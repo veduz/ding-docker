@@ -73,7 +73,7 @@ services:
     volumes_from:
       - webroot
     volumes:
-      - drush-cache:/root/.drush    
+      - drush-cache:/root/.drush
     working_dir: /var/www/web
 
   memcached:
