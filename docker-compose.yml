@@ -16,7 +16,7 @@ web:
     PHP_EXTRA_EXTENSIONS: memcached
   working_dir: /var/www/html
 db:
-  image: mariadb
+  image: ding2/ding2-mysql:master
   ports:
     - '3306/tcp'
   environment:
