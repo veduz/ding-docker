@@ -39,9 +39,9 @@ services:
       - memcached
 
   db:
-    image: mariadb:10
+    image: ding2/ding2-mysql:master
     ports:
-      - '3306'
+      - '3306/tcp'
     # If you want to use a local database dump, remove the volumes_from, place the
     # dump in ./docker/db and add the following
     # volumes:

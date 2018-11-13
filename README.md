@@ -41,11 +41,6 @@ otherwise, you can use vanilla docker-compose:
 % docker-compose up
 ```
 
-or if you are using Mac, you can use docker-sync
-```
-% docker-sync-stack start
-```
-
 You should then be able to access the site.
 
 If the site does not look right then run:
@@ -99,6 +94,5 @@ From inside the docker web containers document root (`/var/www/html`) do:
 
 ## Stuff not polished yet
 
-* memcache setup
 * varnish only one way
 * the drush container does not have access to the SOAP connection that the web container has. This makes it fail on site-install sometimes
