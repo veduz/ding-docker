@@ -27,7 +27,16 @@ Build the site with drush make:
 % drush make --contrib-destination=profiles/ding2/ drupal.make web --working-copy
 ```
 
-Then you can start the Docker containers:
+### Then you can start the Docker containers:
+
+If you're using docker-sync for Mac, you can use:
+
+```sh
+% docker-sync-stack start
+```
+
+otherwise, you can use vanilla docker-compose:
+
 ```sh
 % docker-compose up
 ```
@@ -85,6 +94,5 @@ From inside the docker web containers document root (`/var/www/html`) do:
 
 ## Stuff not polished yet
 
-* memcache setup
 * varnish only one way
 * the drush container does not have access to the SOAP connection that the web container has. This makes it fail on site-install sometimes

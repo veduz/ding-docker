@@ -4,9 +4,9 @@ $databases = array(
   'default' => array(
     'default' => array(
       'driver' => 'mysql',
-      'database' => getenv('DB_ENV_MYSQL_DATABASE'),
-      'username' => getenv('DB_ENV_MYSQL_USER'),
-      'password' => getenv('DB_ENV_MYSQL_PASSWORD'),
+      'database' => 'db',
+      'username' => 'db',
+      'password' => 'db',
       'host' => 'db',
       'prefix' => '',
     ),
@@ -67,3 +67,29 @@ $conf['preprocess_js'] = 1;
 //   $conf['memcache_bins'] = array(
 //     'cache' => 'default',
 //   );
+
+
+// Configure memcache.
+// This requires the memcache php-extension to be enabled.
+$conf['cache_backends'][] = 'profiles/ding2/modules/contrib/memcache/memcache.inc';
+$conf['cache_default_class'] = 'MemCacheDrupal';
+
+// Configure cache servers.
+$conf['memcache_servers'] = array(
+  'memcached:11211' => 'default',
+);
+$conf['memcache_bins'] = array(
+  'cache' => 'default',
+);
+
+$conf['lock_inc'] = 'profiles/ding2/modules/contrib/memcache/memcache-lock.inc';
+
+$conf += array(
+  'memcache_extension' => 'Memcache',
+  'show_memcache_statistics' => 0,
+  'memcache_persistent' => TRUE,
+  'memcache_stampede_protection' => TRUE,
+  'memcache_stampede_semaphore' => 15,
+  'memcache_stampede_wait_time' => 5,
+  'memcache_stampede_wait_limit' => 3,
+);

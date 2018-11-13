@@ -1,3 +1,4 @@
 web/
 docker-compose.override.yml
 drupal.make
+.docker-sync
