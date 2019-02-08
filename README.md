@@ -27,6 +27,8 @@ Build the site with drush make:
 % drush make --contrib-destination=profiles/ding2/ drupal.make web --working-copy
 ```
 
+(or maybe `docker run -v $(pwd):/app drush/drush:8` instead of drush if not installed?)
+
 ### Then you can start the Docker containers:
 
 If you're using docker-sync for Mac, you can use:
